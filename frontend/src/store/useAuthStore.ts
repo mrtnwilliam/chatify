@@ -15,18 +15,27 @@ interface SignupData {
   password: string;
 }
 
+interface LoginData {
+  email: string;
+  password: string;
+}
+
 interface AuthState {
   authUser: AuthUser | null;
   isCheckingAuth: boolean;
   checkAuth: () => Promise<void>;
   isSigningUp: boolean;
+  isLoggingIn: boolean;
   signup: (data: SignupData) => Promise<void>;
+  login: (data: LoginData) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
   authUser: null,
   isCheckingAuth:true,
   isSigningUp: false,
+  isLoggingIn: false,
 
   checkAuth: async () => {
     try {
@@ -56,6 +65,41 @@ export const useAuthStore = create<AuthState>((set) => ({
       }
     } finally {
       set({isSigningUp: false})
+    }
+  },
+
+  login: async (data) => {
+    set({isLoggingIn: true})
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      set({ authUser: res.data });
+
+      toast.success("Logged in successfully")
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+
+        toast.error(error?.response?.data?.message || "Login failed");
+      } else {
+        toast.error("Something went wrong")
+      }
+    } finally {
+      set({isLoggingIn: false})
+    }
+  },
+
+  logout: async () => {
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({ authUser: null });
+
+      toast.success("Logged out successfully")
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+
+        toast.error(error?.response?.data?.message || "Logout failed");
+      } else {
+        toast.error("Something went wrong")
+      }
     }
   }
 }))
