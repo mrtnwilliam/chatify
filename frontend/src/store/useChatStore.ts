@@ -6,6 +6,7 @@ import axios from "axios"
 type User = {
   _id: string
   fullName: string
+  profilePic: string
 }
 
 type Message = {
@@ -16,7 +17,9 @@ type Message = {
 }
 
 type Chat = {
-  id: string
+  _id: string
+  fullName: string
+  profilePic: string
   participants: User[]
   lastMessage?: Message
 }
@@ -32,6 +35,10 @@ type ChatStore = {
   isMessagesLoading: boolean
   isSoundEnabled: boolean
   toggleSound: () => void
+  setActiveTab: (tab: "chats" | "contacts") => void
+  setSelectedUser: (user: User | null) => void
+  getAllContacts: () => Promise<void>
+  getMyChatPartners: () => Promise<void>
 }
 
 export const useChatStore = create<ChatStore>((set,get) => ({

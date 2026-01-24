@@ -6,7 +6,8 @@ import axios from "axios";
 interface AuthUser {
   _id: string;
   email: string;
-  username: string;
+  fullName: string;
+  profilePic?: string;
 }
 
 interface SignupData {
@@ -20,15 +21,21 @@ interface LoginData {
   password: string;
 }
 
+interface UpdateProfileData {
+  profilePic: string;
+}
+
 interface AuthState {
   authUser: AuthUser | null;
   isCheckingAuth: boolean;
   checkAuth: () => Promise<void>;
   isSigningUp: boolean;
   isLoggingIn: boolean;
+  isUpdatingProfile: boolean;
   signup: (data: SignupData) => Promise<void>;
   login: (data: LoginData) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (data: UpdateProfileData) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -36,6 +43,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isCheckingAuth:true,
   isSigningUp: false,
   isLoggingIn: false,
+  isUpdatingProfile: false,
 
   checkAuth: async () => {
     try {
@@ -95,11 +103,28 @@ export const useAuthStore = create<AuthState>((set) => ({
       toast.success("Logged out successfully")
     } catch (error) {
       if (axios.isAxiosError(error)) {
-
         toast.error(error?.response?.data?.message || "Logout failed");
       } else {
         toast.error("Something went wrong")
       }
+    }
+  },
+
+  updateProfile: async (data) => {
+    set({isUpdatingProfile: true})
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data)
+      set({authUser: res.data})
+      toast.success("Profile updated successfully")
+    } catch (error) {
+      console.log("error in update profile:", error);
+      if (axios.isAxiosError(error)) {
+        toast.error(error?.response?.data?.message || "Logout failed");
+      } else {
+        toast.error("Something went wrong")
+      }
+    } finally {
+      set({isUpdatingProfile: false})
     }
   }
 }))
