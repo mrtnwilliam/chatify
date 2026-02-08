@@ -160,7 +160,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
   },
 
   subscribeToMessages: () => {
-    const { selectedUser, isSoundEnabled } = get();
+    const { selectedUser } = get();
     if (!selectedUser) return
 
     const socket = useAuthStore.getState().socket;
@@ -172,6 +172,7 @@ export const useChatStore = create<ChatStore>((set, get) => ({
       const currentMessages = get().messages;
       set({ messages: [...currentMessages, newMessage] });
 
+      const { isSoundEnabled } = get();
       if (isSoundEnabled) {
         const notificationSound = new Audio("/sounds/notification.mp3")
         notificationSound.currentTime = 0; // reset to start
