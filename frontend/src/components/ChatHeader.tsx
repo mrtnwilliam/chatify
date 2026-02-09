@@ -21,8 +21,8 @@ function ChatHeader() {
   },[setSelectedUser])
 
   return (
-    <div className="flex justify-between items-center bg-slate-800/50 border-b border-slate-700/50 max-h-[84px] px-4 sm:px-6 w-full">
-      <div className="flex items-center gap-3 overflow-hidden">
+    <div className="p-2.5 flex justify-between items-center bg-slate-800/50 border-b border-slate-700/50 max-h-[84px] px-4 sm:px-6 w-full">
+      <div className="flex items-center gap-3 overflow-hidden flex-1">
         <div className={`avatar ${isOnline ? "online" : "offline"}`}>
           <div className="size-10 rounded-full relative">
             <img
