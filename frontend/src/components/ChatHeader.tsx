@@ -1,4 +1,4 @@
-// import { XIcon } from "lucide-react";
+import { XIcon } from "lucide-react";
 import { useChatStore } from "../store/useChatStore";
 import { useEffect } from "react";
 import { useAuthStore } from "../store/useAuthStore";
@@ -37,9 +37,8 @@ function ChatHeader() {
         </div>
       </div>
 
-      <button onClick={() => setSelectedUser(null)} className="flex-shrink-0 ml-2 text-white text-xl">
-X
-        {/* <XIcon className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"/> */}
+      <button onClick={() => setSelectedUser(null)} className="flex-shrink-0 ml-2">
+        <XIcon className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"/>
       </button>
     </div>
   );
