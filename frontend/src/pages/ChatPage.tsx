@@ -25,7 +25,7 @@ function ChatPage() {
         </div>
 
         {/* RIGHT SIDE */}
-        <div className={`${!selectedUser ? "hidden md:flex md:flex-col" : "flex flex-col"} flex-1 bg-slate-900/50 backdrop-blur-sm`}>
+        <div className={`${!selectedUser ? "hidden md:flex md:flex-col" : "flex flex-col"} flex-1 bg-slate-900/50 backdrop-blur-sm overflow-hidden`}>
           {selectedUser ? <ChatContainer /> : <NoConversationPlaceholder />}
         </div>
       </BorderAnimatedContainer>
