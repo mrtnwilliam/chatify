@@ -21,7 +21,7 @@ function ChatHeader() {
   },[setSelectedUser])
 
   return (
-    <div className="p-2.5 flex justify-between items-center bg-slate-800/50 border-b border-slate-700/50 max-h-[84px] px-4 sm:px-6 w-full">
+    <div className="p-2.5 flex justify-between items-center bg-slate-800/50 border-b border-slate-700/50 min-h-[64px] px-4 sm:px-6 w-full">
       <div className="flex items-center gap-3 overflow-hidden flex-1">
         <div className={`avatar ${isOnline ? "online" : "offline"}`}>
           <div className="size-10 rounded-full relative">
@@ -37,7 +37,7 @@ function ChatHeader() {
         </div>
       </div>
 
-      <button onClick={() => setSelectedUser(null)}>
+      <button onClick={() => setSelectedUser(null)} className="flex-shrink-0 ml-2">
         <XIcon className="w-5 h-5 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"/>
       </button>
     </div>
