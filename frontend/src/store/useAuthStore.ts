@@ -77,6 +77,8 @@ export const useAuthStore = create<AuthState>((set,get) => ({
       set({ authUser: res.data });
 
       toast.success("Account created successfully!")
+
+      get().connectSocket()
     } catch (error) {
       if (axios.isAxiosError(error)) {
 
